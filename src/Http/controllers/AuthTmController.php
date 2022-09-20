@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 class AuthTmController extends BaseController
 {
     public function login(){
-        $json = encrypt(request()->input('data'));
+        $json = decrypt(request()->input('data'));
         dd($json);
     }
     public function test(){
