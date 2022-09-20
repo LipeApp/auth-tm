@@ -12,6 +12,7 @@ class TmAuthProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/auth_tm.php' => config_path('auth_tm.php')
         ]);
+        $this->loadRoutesFrom(__DIR__.'/../routes/auth_tm.php');
     }
 
 

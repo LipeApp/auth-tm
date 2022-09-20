@@ -1,4 +1,6 @@
 <?php
 
 
-\Illuminate\Support\Facades\Route::get("callback-url", );
+use Seshpulatov\AuthTm\Controllers\AuthTmController;
+
+\Illuminate\Support\Facades\Route::get("login", [AuthTmController::class, 'login']);
