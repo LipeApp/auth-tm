@@ -1,0 +1,24 @@
+{
+    "name": "seshpulatov/auth-tm",
+    "description": "auth tm sso client",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Seshpulatov\\AuthTm\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sarvar",
+            "email": "sarvar_web@texnomart.uz"
+        }
+    ],
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Seshpulatov\\AuthTm\\TmAuthProvider"
+            ]
+        }
+    }
+}
