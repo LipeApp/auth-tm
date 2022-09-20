@@ -1,10 +1,10 @@
 <?php
 
-namespace Seshpulatov\AuthTm\Controllers;
+namespace Seshpulatov\AuthTm\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
 
-class AuthTmController extends Controller
+class AuthTmController extends BaseController
 {
     public function login(){
         $json = encrypt(request()->input('data'));
