@@ -10,4 +10,7 @@ class AuthTmController extends Controller
         $json = encrypt(request()->input('data'));
         dd($json);
     }
+    public function test(){
+        dd('test');
+    }
 }
