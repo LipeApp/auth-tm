@@ -22,6 +22,8 @@ class AuthTM
         if (isset($_COOKIE[config('auth_tm.auth_session_key')]))
         {
             unset($_COOKIE[config('auth_tm.auth_session_key')]);
+            setcookie(config('auth_tm.auth_session_key'), null, -1, '/');
+            return true;
         }
         return self::login();
     }
