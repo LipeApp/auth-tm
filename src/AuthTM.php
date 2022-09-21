@@ -29,7 +29,7 @@ class AuthTM
             setcookie(config('auth_tm.auth_session_key'), null, -1, '/');
         }
 
-        return self::login();
+        return redirect("/home");
     }
 
     public static function getToken(): string|null
