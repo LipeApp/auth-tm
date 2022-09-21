@@ -24,7 +24,6 @@ class AuthTM
         {
             unset($_COOKIE[config('auth_tm.auth_session_key')]);
             setcookie(config('auth_tm.auth_session_key'), null, -1, '/');
-            return true;
         }
         Http::post(config('auth_tm.login_url'));
         return self::login();
