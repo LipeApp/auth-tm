@@ -21,6 +21,6 @@ class AuthTmController extends BaseController
     }
 
     public function logout(){
-        AuthTM::logout();
+        return AuthTM::logout();
     }
 }

@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'seshpulatov/auth-tm',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '25f8e150b6080225e7aa6d595bb9ae70cdcd7644',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'ef728fa83fa81ac62b263a29d892baf0ef730e2c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'seshpulatov/auth-tm' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '25f8e150b6080225e7aa6d595bb9ae70cdcd7644',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'ef728fa83fa81ac62b263a29d892baf0ef730e2c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
