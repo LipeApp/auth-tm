@@ -9,9 +9,11 @@ class AuthTmController extends BaseController
 {
     public function login(){
         $coder = new Coder();
-        $json = $coder->decrypt(request()->input('data'));
-        dd($json);
-        return 1;
+        $json = json_decode($coder->decrypt(request()->input('data')));
+        \Cache::remember($json->token, 60 * 60, function () use ($json){
+            return $json->user;
+        });
+        return redirect(route($json->route))->withCookie(cookie()->forever(config('auth_tm.auth_session_key'), $json->token));
     }
     public function test(){
         dd('test');

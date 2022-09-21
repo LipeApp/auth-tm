@@ -30,7 +30,7 @@ class Coder
     }
 
 
-    public function decrypt(string $text): string
+    public function decrypt(string $text) : string
     {
         return $this->model->decrypt($text);
     }
