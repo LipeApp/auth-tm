@@ -3,6 +3,7 @@
 namespace Seshpulatov\AuthTm\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use Seshpulatov\AuthTm\AuthTM;
 use Seshpulatov\AuthTm\Helper\Coder;
 
 class AuthTmController extends BaseController
@@ -17,5 +18,9 @@ class AuthTmController extends BaseController
     }
     public function test(){
         dd('test');
+    }
+
+    public function logout(){
+        AuthTM::logout();
     }
 }
