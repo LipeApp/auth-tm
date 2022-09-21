@@ -2,6 +2,7 @@
 
 namespace Seshpulatov\AuthTm;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 class AuthTM
@@ -25,6 +26,7 @@ class AuthTM
             setcookie(config('auth_tm.auth_session_key'), null, -1, '/');
             return true;
         }
+        Http::post(config('auth_tm.login_url'));
         return self::login();
     }
 
