@@ -22,10 +22,13 @@ class AuthTM
     public static function logout(){
         if (isset($_COOKIE[config('auth_tm.auth_session_key')]))
         {
+            Http::post(config('auth_tm.login_url'),[
+                'token'=>$_COOKIE[config('auth_tm.auth_session_key')]
+            ]);
             unset($_COOKIE[config('auth_tm.auth_session_key')]);
             setcookie(config('auth_tm.auth_session_key'), null, -1, '/');
         }
-        Http::post(config('auth_tm.login_url'));
+
         return self::login();
     }
 
