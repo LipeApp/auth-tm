@@ -23,4 +23,14 @@ class AuthTmController extends BaseController
     public function logout(){
         return AuthTM::logout();
     }
+    public function routes()
+    {
+
+        collect(\Route::getRoutes())->map(function ($route) use (&$routes){
+            if(str_contains($route->getActionName(), "App\Http\Controllers")){
+                $routes[] = $route->getName();
+            }
+        });
+        return response()->json($routes);
+    }
 }
