@@ -2,6 +2,7 @@
 
 namespace Seshpulatov\AuthTm;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Seshpulatov\AuthTm\Http\Middleware\AuthControl;
 
