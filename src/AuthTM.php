@@ -51,6 +51,6 @@ class AuthTM
                 return $json->menus;
             });
         }
+        return [];
     }
-
 }
