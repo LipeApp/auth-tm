@@ -38,12 +38,19 @@ class AuthTM
     {
         return request()->cookie(config('auth_tm.auth_session_key'));
     }
+
     public static function user(){
-        return isset($_COOKIE[config('auth_tm.auth_session_key')])?\Cache::get($_COOKIE[config('auth_tm.auth_session_key')])['user']:null;
+        return isset($_COOKIE[config('auth_tm.auth_session_key')."_user"])?\Cache::get($_COOKIE[config('auth_tm.auth_session_key')]):null;
     }
 
-    public static function menus(){
-        return isset($_COOKIE[config('auth_tm.auth_session_key')])?\Cache::get($_COOKIE[config('auth_tm.auth_session_key')])['menus']:null;
+    public static function getMenu(){
+        if (isset($_COOKIE[config('auth_tm.auth_session_key')]))
+        {
+            return \Cache::remember($_COOKIE[config('auth_tm.auth_session_key')]."_menu", 60 * 24 * 7, function () {
+                $json = json_decode(Http::acceptJson()->get(config('auth_tm.menu_url')));
+                return $json->menus;
+            });
+        }
     }
 
 }

@@ -11,16 +11,10 @@ class AuthTmController extends BaseController
     public function login(){
         $coder = new Coder();
         $json = json_decode($coder->decrypt(request()->input('data')));
-        $menus = collect();
-        foreach ($json->menus as $menu){
-            $menus->add(explode('.',$menu)[0]);
-        }
-        \Cache::remember($json->token, 60 * 60, function () use ($json, $menus){
-            return [
-                "user"=>$json->user,
-                "menus"=>$menus->unique()
-            ];
+        \Cache::remember($json->token."_user", 60 * 24 * 7, function () use ($json){
+            return $json->user;
         });
+
         return redirect(route($json->route))->withCookie(cookie()->forever(config('auth_tm.auth_session_key'), $json->token));
     }
     public function test(){
@@ -32,12 +26,13 @@ class AuthTmController extends BaseController
     }
     public function routes()
     {
-
         collect(\Route::getRoutes())->map(function ($route) use (&$routes){
-            if(str_contains($route->getActionName(), "App\Http\Controllers")){
+            if(str_contains($route->getActionName(), "App\Http\Controllers") && !str_contains($route->getActionName(), "App\Http\Controllers\Api")){
                 $routes[] = $route->getName();
             }
         });
         return response()->json($routes);
     }
+
+
 }
