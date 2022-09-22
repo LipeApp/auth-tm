@@ -3,6 +3,7 @@
 namespace Seshpulatov\AuthTm;
 
 use Illuminate\Support\ServiceProvider;
+use Seshpulatov\AuthTm\Http\Middleware\AuthControl;
 
 class TmAuthProvider extends ServiceProvider
 {
@@ -13,6 +14,8 @@ class TmAuthProvider extends ServiceProvider
             __DIR__.'/../config/auth_tm.php' => config_path('auth_tm.php')
         ]);
         $this->loadRoutesFrom(__DIR__.'/../routes/auth_tm.php');
+        $router = $this->app->make(Router::class);
+        $router->pushMiddlewareToGroup('auth_control', AuthControl::class);
     }
 
 
