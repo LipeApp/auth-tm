@@ -28,13 +28,13 @@ class AuthControl
         if ($hasToken === true){
             //dd('hasToken');
             $token = $_COOKIE[config('auth_tm.auth_session_key')];
-            $json = Http::withHeaders([
+            $json = Http::acceptJson()->withHeaders([
                 'Authorization'=>'Bearer '.$token
             ])->post(config('auth_tm.login_check'),[
                 'route' =>  Route::currentRouteName(),
                 'service_id'=>config('auth_tm.service_id')
             ])->json();
-            if ($json['success'] ){
+            if (isset($json['success'])){
                 if ($json['allowed']){
                     return $next($request);
                 }else{

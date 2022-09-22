@@ -22,7 +22,7 @@ class AuthTM
     public static function logout(){
         if (isset($_COOKIE[config('auth_tm.auth_session_key')]))
         {
-            Http::withHeaders([
+            Http::acceptJson()->withHeaders([
                 'Authorization'=>'Bearer '.$_COOKIE[config('auth_tm.auth_session_key')]
             ])->post(config('auth_tm.logout_url'),[
                 'token'=>$_COOKIE[config('auth_tm.auth_session_key')]
