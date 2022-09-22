@@ -16,7 +16,7 @@ class TmAuthProvider extends ServiceProvider
         ]);
         $this->loadRoutesFrom(__DIR__.'/../routes/auth_tm.php');
         $router = $this->app->make(Router::class);
-        $router->pushMiddlewareToGroup('auth_control', AuthControl::class);
+        $router->aliasMiddleware('capitalize', AuthControl::class);
     }
 
 
