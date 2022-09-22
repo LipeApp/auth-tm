@@ -48,6 +48,7 @@ class AuthTM
         {
             return \Cache::remember($_COOKIE[config('auth_tm.auth_session_key')]."_menu", 60 * 24 * 7, function () {
                 $json = json_decode(Http::acceptJson()->get(config('auth_tm.menu_url')));
+
                 return $json->menus;
             });
         }
