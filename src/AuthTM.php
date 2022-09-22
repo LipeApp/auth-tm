@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 class AuthTM
 {
 
+
     public static function check(){
 
     }
@@ -40,7 +41,7 @@ class AuthTM
     }
 
     public static function user(){
-        return isset($_COOKIE[config('auth_tm.auth_session_key')."_user"])?\Cache::get($_COOKIE[config('auth_tm.auth_session_key')]):null;
+        return isset($_COOKIE[config('auth_tm.auth_session_key')."_user"])?\Cache::get($_COOKIE[config('auth_tm.auth_session_key')."_user"]):null;
     }
 
     public static function getMenu(){
