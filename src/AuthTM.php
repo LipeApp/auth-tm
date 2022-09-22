@@ -39,7 +39,11 @@ class AuthTM
         return request()->cookie(config('auth_tm.auth_session_key'));
     }
     public static function user(){
-        return isset($_COOKIE[config('auth_tm.auth_session_key')])?\Cache::get($_COOKIE[config('auth_tm.auth_session_key')]):null;
+        return isset($_COOKIE[config('auth_tm.auth_session_key')])?\Cache::get($_COOKIE[config('auth_tm.auth_session_key')])['user']:null;
+    }
+
+    public static function menus(){
+        return isset($_COOKIE[config('auth_tm.auth_session_key')])?\Cache::get($_COOKIE[config('auth_tm.auth_session_key')])['menus']:null;
     }
 
 }

@@ -34,15 +34,19 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "true",
-    "last_opened_file_path": "C:/OpenServer/domains/auth-tm/src/Http/Middleware",
+    "last_opened_file_path": "C:/OpenServer/domains/auth-tm/src/Http/Controllers/Api",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\OpenServer\domains\auth-tm\src\Http\Controllers\Api" />
       <recent name="C:\OpenServer\domains\auth-tm\src\Http\Middleware" />
       <recent name="C:\OpenServer\domains\auth-tm" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\OpenServer\domains\auth-tm\src\Http\Controllers" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -56,7 +60,7 @@
       <workItem from="1663669427426" duration="5356000" />
       <workItem from="1663733233794" duration="541000" />
       <workItem from="1663734179189" duration="8585000" />
-      <workItem from="1663819904487" duration="3699000" />
+      <workItem from="1663819904487" duration="5441000" />
     </task>
     <servers />
   </component>
