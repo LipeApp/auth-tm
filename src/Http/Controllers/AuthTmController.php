@@ -26,12 +26,14 @@ class AuthTmController extends BaseController
     }
     public function routes()
     {
-        collect(\Route::getRoutes())->map(function ($route) use (&$routes){
+        $routes = [];
+        collect(\Route::getRoutes())->map(function ($route) use ($routes){
             if(str_contains($route->getActionName(), "App\Http\Controllers") && !str_contains($route->getActionName(), "App\Http\Controllers\Api")){
                 $routes[] = $route->getName();
             }
         });
-        return response()->json($routes);
+        $coder = new Coder();
+        return response()->json(['data'=>$coder->encrypt(json_encode($routes))]);
     }
 
 

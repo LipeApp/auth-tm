@@ -3,7 +3,7 @@
         'name' => 'seshpulatov/auth-tm',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'ef728fa83fa81ac62b263a29d892baf0ef730e2c',
+        'reference' => '6494fe31d7db0de90865f52807f60912f3d05427',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'seshpulatov/auth-tm' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'ef728fa83fa81ac62b263a29d892baf0ef730e2c',
+            'reference' => '6494fe31d7db0de90865f52807f60912f3d05427',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
