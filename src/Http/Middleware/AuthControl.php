@@ -41,8 +41,7 @@ class AuthControl
                     abort(403);
                 }
             }else{
-                AuthTM::logout();
-                return AuthTM::login();
+                return AuthTM::logout();
             }
         }else{
             AuthTM::logout();

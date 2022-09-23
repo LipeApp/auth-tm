@@ -51,7 +51,6 @@ class AuthTM
                 $json = json_decode(Http::acceptJson()
                     ->withHeaders(['Authorization'=>'Bearer '.$_COOKIE[config('auth_tm.auth_session_key')]])
                     ->get(config('auth_tm.menu_url')));
-
                 return $json->menus;
             });
         }
