@@ -26,8 +26,7 @@ class AuthTmController extends BaseController
     }
     public function routes()
     {
-        $routes = [];
-        collect(\Route::getRoutes())->map(function ($route) use ($routes){
+        collect(\Route::getRoutes())->map(function ($route) use (&$routes){
             if(str_contains($route->getActionName(), "App\Http\Controllers") && !str_contains($route->getActionName(), "App\Http\Controllers\Api")){
                 $routes[] = $route->getName();
             }
