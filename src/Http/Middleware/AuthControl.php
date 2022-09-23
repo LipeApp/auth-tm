@@ -36,7 +36,7 @@ class AuthControl
                 'service_id'=>config('auth_tm.service_id')
             ])->json();
             $json = json_decode($this->coder->decrypt($json));
-            if (isset($json['success']) && $json->expires_at < time()){
+            if (isset($json['success'])){ // && $json->expires_at < time()
                 if ($json['allowed']){
                     return $next($request);
                 }else{

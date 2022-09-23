@@ -8,7 +8,6 @@ use Seshpulatov\AuthTm\Helper\Coder;
 
 class AuthTmController extends BaseController
 {
-
     public function login(){
         $coder = new Coder();
         $json = json_decode($coder->decrypt(request()->input('data')));
@@ -32,8 +31,6 @@ class AuthTmController extends BaseController
                 $routes[] = $route->getName();
             }
         });
-        /*$coder = new Coder();
-        $coder->encrypt($routes);*/
         return response()->json($routes);
     }
 
