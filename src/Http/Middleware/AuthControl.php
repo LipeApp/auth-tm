@@ -8,17 +8,18 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Seshpulatov\AuthTm\AuthTM;
+use Seshpulatov\AuthTm\Helper\Coder;
 use function Symfony\Component\Translation\t;
 
 class AuthControl
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
+    private Coder $coder;
+
+    public function __construct()
+    {
+        $this->coder = new Coder();
+    }
+
     public function handle(Request $request, Closure $next)
     {
         $value = $request->cookie(config('auth_tm.auth_session_key'));
@@ -34,7 +35,8 @@ class AuthControl
                 'route' =>  Route::currentRouteName(),
                 'service_id'=>config('auth_tm.service_id')
             ])->json();
-            if (isset($json['success'])){
+            $json = json_decode($this->coder->decrypt($json));
+            if (isset($json['success']) && $json->expires_at < time()){
                 if ($json['allowed']){
                     return $next($request);
                 }else{
