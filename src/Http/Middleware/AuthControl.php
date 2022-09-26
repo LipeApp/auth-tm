@@ -36,9 +36,11 @@ class AuthControl
                 'route' =>  Route::currentRouteName(),
                 'service_id'=>config('auth_tm.service_id')
             ]);
+            if ($check->status() === 401)
+                return AuthTM::logout();
 
             $coder = new Coder();
-            $json = json_decode($coder->decrypt($check->json()['data']));
+            $json = json_decode($coder->decrypt($check->json('data')));
 
             if (isset($json->success)){ // && $json->expires_at < time()
                 if ($json->allowed){
