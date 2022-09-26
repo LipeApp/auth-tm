@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'key'   =>  env('AUTH_SERVICE_ID'),
+    'key'   =>  env('AUTH_SERVICE_KEY'),
     'login_url' => env('AUTH_SERVICE_URL')."/auth",
     'login_check' => env('AUTH_SERVICE_URL')."/api/check",
     'logout_url' => env('AUTH_SERVICE_URL')."/api/logout",

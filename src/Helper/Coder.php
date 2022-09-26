@@ -14,7 +14,7 @@ class Coder
 
     public function getSecret(): string
     {
-        return "MpHilRetionArdIStonTulAnYToNAGNO";
+        return config('auth_tm.key');
     }
 
 
