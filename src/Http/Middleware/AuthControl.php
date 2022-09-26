@@ -29,7 +29,7 @@ class AuthControl
         if ($hasToken === true){
             //dd('hasToken');
             $token = $_COOKIE[config('auth_tm.auth_session_key')];
-            dd($token);
+            //dd($token);
             $check = Http::acceptJson()->withHeaders([
                 'Authorization'=>'Bearer '.$token
             ])->post(config('auth_tm.login_check'),[
