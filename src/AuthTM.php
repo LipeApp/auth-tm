@@ -36,7 +36,10 @@ class AuthTM
     }
 
     public static function user(){
-        return \Cache::get($_COOKIE[config('auth_tm.auth_session_key')].'_user')??[];
+        if (isset($_COOKIE[config('auth_tm.auth_session_key')])) {
+            return \Cache::get($_COOKIE[config('auth_tm.auth_session_key')] . '_user') ?? [];
+        }
+        return [];
     }
 
     public static function getMenu(){
