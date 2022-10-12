@@ -22,6 +22,9 @@ class AuthControl
 
     public function handle(Request $request, Closure $next)
     {
+        if (config('APP.ENV') === 'testing'){
+            return $next($request);
+        }
         $value = $request->cookie(config('auth_tm.auth_session_key'));
         //dd($value);
         $hasToken = isset($_COOKIE[config('auth_tm.auth_session_key')]);
