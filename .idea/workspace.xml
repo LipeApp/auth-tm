@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bb2d6d46-c43c-4e81-8978-4c9c0bb6a2fa" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/auth_tm.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth_tm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AuthTM.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AuthTM.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +64,7 @@
       <workItem from="1663905825901" duration="8132000" />
       <workItem from="1664166205466" duration="8214000" />
       <workItem from="1665403038229" duration="641000" />
+      <workItem from="1665562087811" duration="599000" />
     </task>
     <servers />
   </component>

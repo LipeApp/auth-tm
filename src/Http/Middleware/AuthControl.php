@@ -22,7 +22,7 @@ class AuthControl
 
     public function handle(Request $request, Closure $next)
     {
-        if (config('APP.ENV') === 'testing'){
+        if (config('app.env') === 'testing'){
             return $next($request);
         }
         $value = $request->cookie(config('auth_tm.auth_session_key'));
