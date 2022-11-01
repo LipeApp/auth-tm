@@ -10,6 +10,9 @@ class AuthTmController extends BaseController
 {
     public function login(){
         $coder = new Coder();
+        if (is_array(request()->input('data'))){
+            exit("AuthTMController");
+        }
         $json = json_decode($coder->decrypt(request()->input('data')));
         \Cache::remember($json->token."_user", 60 * 24 * 7, function () use ($json){
             return $json->user;

@@ -43,6 +43,9 @@ class AuthControl
                 return AuthTM::logout();
 
             $coder = new Coder();
+            if (is_array($check->json('data'))){
+                exit("Auth Controller");
+            }
             $json = json_decode($coder->decrypt($check->json('data')));
 
             if (isset($json->success)){ // && $json->expires_at < time()
