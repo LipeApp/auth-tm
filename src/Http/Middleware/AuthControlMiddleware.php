@@ -25,11 +25,9 @@ class AuthControlMiddleware
             return $next($request);
         }
 
-        $key = AuthTM::authSessionKey();
-        $hasToken = $request->hasCookie($key);
+        $token = AuthTM::authTmCookieToken();
 
-        if ($hasToken) {
-            $token = AuthTM::authTmCookieToken();
+        if ($token) {
             $check = Http::acceptJson()
                 ->withToken($token)
                 ->post(config('auth_tm.login_check'), [
@@ -38,15 +36,17 @@ class AuthControlMiddleware
                 ]);
 
             if ($check->status() === 401) {
-                return AuthTM::logout();
+                AuthTM::logout();
+                abort(403);
             }
 
             $coder = new Coder();
-            if (is_array($check->json('data'))) {
+            $data = $check->json('data');
+            if (is_array($data)) {
                 exit("Auth Controller");
             }
 
-            $json = json_decode($coder->decrypt($check->json('data')));
+            $json = json_decode($coder->decrypt($data));
 
             if (isset($json->success)) {
                 if ($json->allowed) {

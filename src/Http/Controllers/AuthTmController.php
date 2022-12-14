@@ -21,6 +21,7 @@ class AuthTmController extends BaseController
      */
     public function login()
     {
+
         $coder = new Coder();
 
         if (is_array(request()->input('data'))) {
@@ -41,9 +42,7 @@ class AuthTmController extends BaseController
             $url = route($route);
         }
         $cookie = cookie()->make(config('auth_tm.auth_session_key'), $json->token, 24 * 60 * 7);
-
-        return to_route('home')
-            ->withCookie($cookie);
+        return redirect($url)->withCookie($cookie);
     }
 
     /**

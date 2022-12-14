@@ -23,7 +23,7 @@ class AuthTM
 
     public static function authTmCookieToken()
     {
-        return request()->cookie(self::authSessionKey());
+        return $_COOKIE[(self::authSessionKey())] ?? null;
     }
 
     /**
