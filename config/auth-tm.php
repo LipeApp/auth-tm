@@ -106,4 +106,26 @@ return [
     |
     */
     'after_logout_url' => env('AUTH_SERVICE_AFTER_LOGOUT_URL', '/'),
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Documentation url.
+    |--------------------------------------------------------------------------
+    |
+    | Default page sahifasidagi "documentation" tugmasi uchun url.
+    |
+    */
+
+    'documentation_url' => "#",
+
+    /*
+    |--------------------------------------------------------------------------
+    | Administration home page url.
+    |--------------------------------------------------------------------------
+    |
+    | Default page sahifasidagi Administrator paneliga o'tish uchun url.
+    |
+    */
+    'home_page_url' => "/home",
 ];
