@@ -3,6 +3,7 @@
 namespace Seshpulatov\AuthTm\Http\Controllers;
 
 use Cache;
+use Cookie;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\JsonResponse;
@@ -41,7 +42,7 @@ class AuthTmController extends BaseController
         } else {
             $url = route($route);
         }
-        $cookie = \Cookie::forever(AuthTM::authSessionKey(), $json->token);
+        $cookie = \Cookie::forever(AuthTM::getCookieKey(), $json->token);
         return redirect($url)->cookie($cookie);
     }
 

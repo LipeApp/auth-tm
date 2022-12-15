@@ -16,7 +16,7 @@ class AuthTM
     /**
      * @return mixed
      */
-    public static function authSessionKey()
+    public static function getCookieKey()
     {
         return config('auth_tm.auth_session_key');
     }
@@ -24,9 +24,9 @@ class AuthTM
     /**
      * @return string|null
      */
-    public static function authTmCookieToken()
+    public static function getToken()
     {
-        return Cookie::get(self::authSessionKey());
+        return Cookie::get(self::getCookieKey());
     }
 
     /**
@@ -47,7 +47,7 @@ class AuthTM
     {
 
         $key = config('auth_tm.auth_session_key');
-        $token = self::authTmCookieToken();
+        $token = self::getToken();
 
         if ($token) {
             Http::acceptJson()
@@ -58,16 +58,9 @@ class AuthTM
         }
 
         Cache::forget(config($key . '_user'));
-        Cookie::forget($key);
+        $cookie = Cookie::forever(AuthTM::getCookieKey(), null);
+        Cookie::queue($cookie);
 
-    }
-
-    /**
-     * @return string|null
-     */
-    public static function getToken(): string|null
-    {
-        return request()->cookie(config('auth_tm.auth_session_key'));
     }
 
     /**
@@ -75,10 +68,8 @@ class AuthTM
      */
     public static function user()
     {
-        if (isset($_COOKIE[config('auth_tm.auth_session_key')])) {
-            return Cache::get($_COOKIE[config('auth_tm.auth_session_key')] . '_user') ?? [];
-        }
-        return [];
+        $token = self::getToken();
+        return Cache::get($token . '_user', []);
     }
 
 

@@ -25,7 +25,7 @@ class AuthControlMiddleware
             return $next($request);
         }
 
-        $token = AuthTM::authTmCookieToken();
+        $token = AuthTM::getToken();
 
         if ($token) {
 
@@ -35,9 +35,7 @@ class AuthControlMiddleware
                     'route' => Route::currentRouteName(),
                     'service_id' => config('auth_tm.service_id')
                 ]);
-
             if ($check->status() === 401) {
-//                AuthTM::logout();
                 return AuthTM::login();
             }
 
