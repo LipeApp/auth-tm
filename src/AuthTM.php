@@ -21,9 +21,12 @@ class AuthTM
         return config('auth_tm.auth_session_key');
     }
 
+    /**
+     * @return string|null
+     */
     public static function authTmCookieToken()
     {
-        return $_COOKIE[(self::authSessionKey())] ?? null;
+        return Cookie::get(self::authSessionKey());
     }
 
     /**
@@ -56,12 +59,7 @@ class AuthTM
 
         Cache::forget(config($key . '_user'));
         Cookie::forget($key);
-        if (isset($_COOKIE[$key])) {
-            unset($_COOKIE[$key]);
-            setcookie($key, null, -1);
-        }
 
-        return redirect(config('auth_tm.default_url'));
     }
 
     /**

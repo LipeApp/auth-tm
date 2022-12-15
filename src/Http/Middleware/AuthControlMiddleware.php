@@ -25,9 +25,7 @@ class AuthControlMiddleware
             return $next($request);
         }
 
-        $key = AuthTM::authSessionKey();
-
-        $token = \Cookie::get($key);
+        $token = AuthTM::authTmCookieToken();
 
         if ($token) {
 
@@ -39,12 +37,13 @@ class AuthControlMiddleware
                 ]);
 
             if ($check->status() === 401) {
-                AuthTM::logout();
-                abort(401);
+//                AuthTM::logout();
+                return AuthTM::login();
             }
 
             $coder = new Coder();
             $data = $check->json('data');
+
             if (is_array($data)) {
                 exit("Auth Controller");
             }
