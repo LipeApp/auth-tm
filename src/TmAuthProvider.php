@@ -10,20 +10,20 @@ class TmAuthProvider extends ServiceProvider
 {
 
 
-    public function boot(){
+    public function boot()
+    {
         $this->publishes([
-            __DIR__.'/../config/auth_tm.php' => config_path('auth_tm.php')
+            __DIR__ . '/../config/auth-tm.php' => config_path('auth-tm.php')
         ]);
-        $this->loadRoutesFrom(__DIR__.'/../routes/auth_tm.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/auth-tm.php');
         $router = $this->app->make(Router::class);
         $router->aliasMiddleware('auth_tm', AuthControlMiddleware::class);
     }
 
 
-
     public function register()
     {
-        $this->app->singleton(AuthTM::class, function (){
+        $this->app->singleton(AuthTM::class, function () {
             return new AuthTM();
         });
     }
