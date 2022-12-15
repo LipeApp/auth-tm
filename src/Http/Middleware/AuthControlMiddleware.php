@@ -25,9 +25,12 @@ class AuthControlMiddleware
             return $next($request);
         }
 
-        $token = AuthTM::authTmCookieToken();
+        $key = AuthTM::authSessionKey();
+
+        $token = \Cookie::get($key);
 
         if ($token) {
+
             $check = Http::acceptJson()
                 ->withToken($token)
                 ->post(config('auth_tm.login_check'), [
@@ -37,7 +40,7 @@ class AuthControlMiddleware
 
             if ($check->status() === 401) {
                 AuthTM::logout();
-                abort(403);
+                abort(401);
             }
 
             $coder = new Coder();

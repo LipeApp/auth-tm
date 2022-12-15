@@ -3,6 +3,6 @@
 
 use Seshpulatov\AuthTm\Http\Controllers\AuthTmController;
 
-\Illuminate\Support\Facades\Route::get("login", [AuthTmController::class, 'login'])->name('tm_login');
-\Illuminate\Support\Facades\Route::get("tm_logout", [AuthTmController::class, 'logout'])->name('tm_logout');
-\Illuminate\Support\Facades\Route::get("api/routes", [AuthTmController::class, 'routes'])->name('tm_routes');
+\Illuminate\Support\Facades\Route::get("auth-tm/login", [AuthTmController::class, 'login'])->name('auth-tm.login');
+\Illuminate\Support\Facades\Route::get("auth-tm/logout", [AuthTmController::class, 'logout'])->name('auth-tm.logout');
+\Illuminate\Support\Facades\Route::get("api/routes", [AuthTmController::class, 'routes'])->name('auth-tm.routes');

@@ -41,8 +41,8 @@ class AuthTmController extends BaseController
         } else {
             $url = route($route);
         }
-        $cookie = cookie()->make(config('auth_tm.auth_session_key'), $json->token, 24 * 60 * 7);
-        return redirect($url)->withCookie($cookie);
+        $cookie = \Cookie::make(AuthTM::authSessionKey(), $json->token, 24 * 60 * 7);
+        return redirect($url)->cookie($cookie);
     }
 
     /**

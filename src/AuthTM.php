@@ -44,18 +44,21 @@ class AuthTM
     {
 
         $key = config('auth_tm.auth_session_key');
+        $token = self::authTmCookieToken();
 
-        if (request()->hasCookie($key)) {
-
-            $token = request()->cookie($key);
-
+        if ($token) {
             Http::acceptJson()
                 ->withToken($token)
                 ->post(config('auth_tm.logout_url'), [
                     'token' => $token
                 ]);
+        }
 
-            Cookie::forget($key);
+        Cache::forget(config($key . '_user'));
+        Cookie::forget($key);
+        if (isset($_COOKIE[$key])) {
+            unset($_COOKIE[$key]);
+            setcookie($key, null, -1);
         }
 
         return redirect(config('auth_tm.default_url'));
