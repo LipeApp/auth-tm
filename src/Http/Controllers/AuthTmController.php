@@ -51,7 +51,6 @@ class AuthTmController extends BaseController
         } else {
             $url = route($route);
         }
-
         $cookie = \Cookie::make(AuthTM::getCookieKey(), $json->token, 24 * 60 * 7);
         \Cookie::queue($cookie);
         return redirect($url);
