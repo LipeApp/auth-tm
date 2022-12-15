@@ -2,7 +2,6 @@
 
 namespace Seshpulatov\AuthTm;
 
-use Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -12,6 +11,11 @@ use Illuminate\Support\Facades\Route;
 
 class AuthTM
 {
+
+    /**
+     * @var User|null
+     */
+    public static $user;
 
     /**
      * @return mixed
@@ -46,9 +50,7 @@ class AuthTM
     public static function logout()
     {
 
-        $key = config('auth_tm.auth_session_key');
         $token = self::getToken();
-
         if ($token) {
             Http::acceptJson()
                 ->withToken($token)
@@ -57,20 +59,72 @@ class AuthTM
                 ]);
         }
 
-        Cache::forget(config($key . '_user'));
+        AuthTM::forgetCookie();
+        AuthTM::removeUser();
+
+    }
+
+    public static function forgetCookie()
+    {
         $cookie = Cookie::forever(AuthTM::getCookieKey(), null);
         Cookie::queue($cookie);
-
     }
 
     /**
-     * @return array|mixed
+     * @return User|null
      */
-    public static function user()
+    public static function user(): ?User
     {
-        $token = self::getToken();
-        return Cache::get($token . '_user', []);
+        return self::$user;
     }
 
+    /**
+     * @return bool
+     */
+    public static function hasUser(): bool
+    {
+        return !is_null(self::user());
+    }
+
+    /**
+     * @return int|null
+     */
+    public static function userId()
+    {
+        if (self::hasUser()) {
+            return self::user()->id;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function userFullName()
+    {
+        if (self::hasUser()) {
+            return self::user()->full_name;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param array $userData
+     */
+    public static function setUser(array $userData): void
+    {
+        $user = new User($userData);
+        self::$user = $user;
+    }
+
+    /**
+     * @return void
+     */
+    public static function removeUser()
+    {
+        self::$user = null;
+    }
 
 }

@@ -3,7 +3,10 @@
 namespace Seshpulatov\AuthTm\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Seshpulatov\AuthTm\AuthTM;
@@ -18,6 +21,11 @@ class AuthControlMiddleware
         $this->coder = new Coder();
     }
 
+    /**
+     * @param Request $request
+     * @param Closure $next
+     * @return Application|RedirectResponse|Redirector|mixed
+     */
     public function handle(Request $request, Closure $next)
     {
 
@@ -35,6 +43,7 @@ class AuthControlMiddleware
                     'route' => Route::currentRouteName(),
                     'service_id' => config('auth_tm.service_id')
                 ]);
+
             if ($check->status() === 401) {
                 return AuthTM::login();
             }
@@ -42,20 +51,21 @@ class AuthControlMiddleware
             $coder = new Coder();
             $data = $check->json('data');
 
-            if (is_array($data)) {
-                exit("Auth Controller");
-            }
-
             $json = json_decode($coder->decrypt($data));
 
             if (isset($json->success)) {
+
+                $userData = data_get($json, 'user');
+
+                if ($userData) {
+                    AuthTM::setUser((array)$userData);
+                }
+
                 if ($json->allowed) {
                     return $next($request);
                 } else {
                     abort(403);
                 }
-            } else {
-                return AuthTM::logout();
             }
         }
 

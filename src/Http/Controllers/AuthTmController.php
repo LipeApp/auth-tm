@@ -2,8 +2,6 @@
 
 namespace Seshpulatov\AuthTm\Http\Controllers;
 
-use Cache;
-use Cookie;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\JsonResponse;
@@ -31,9 +29,9 @@ class AuthTmController extends BaseController
 
         $json = json_decode($coder->decrypt(request()->input('data')));
 
-        Cache::remember($json->token . "_user", 60 * 24 * 7, function () use ($json) {
-            return $json->user;
-        });
+        $userData = (array)$json->user;
+
+        AuthTM::setUser($userData);
 
         $route = data_get($json, 'route');
 
@@ -42,7 +40,8 @@ class AuthTmController extends BaseController
         } else {
             $url = route($route);
         }
-        $cookie = \Cookie::forever(AuthTM::getCookieKey(), $json->token);
+
+        $cookie = \Cookie::make(AuthTM::getCookieKey(), $json->token, 24 * 60 * 7);
         return redirect($url)->cookie($cookie);
     }
 
