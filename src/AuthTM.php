@@ -45,7 +45,7 @@ class AuthTM
     }
 
     /**
-     * @return Application|RedirectResponse|Redirector
+     * @return void
      */
     public static function logout()
     {
@@ -64,6 +64,9 @@ class AuthTM
 
     }
 
+    /**
+     * @return void
+     */
     public static function forgetCookie()
     {
         $cookie = Cookie::forever(AuthTM::getCookieKey(), null);
