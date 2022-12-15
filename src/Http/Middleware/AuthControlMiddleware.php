@@ -39,9 +39,9 @@ class AuthControlMiddleware
 
             $check = Http::acceptJson()
                 ->withToken($token)
-                ->post(config('auth_tm.login_check'), [
+                ->post(config('auth-tm.login_check'), [
                     'route' => Route::currentRouteName(),
-                    'service_id' => config('auth_tm.service_id')
+                    'service_id' => config('auth-tm.service_id')
                 ]);
 
             if ($check->status() === 401) {

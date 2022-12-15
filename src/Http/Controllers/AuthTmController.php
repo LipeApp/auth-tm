@@ -36,7 +36,7 @@ class AuthTmController extends BaseController
         $route = data_get($json, 'route');
 
         if (empty($route) || Route::has($route)) {
-            $url = config('auth_tm.after_login_url');
+            $url = config('auth-tm.after_login_url');
         } else {
             $url = route($route);
         }
@@ -52,7 +52,7 @@ class AuthTmController extends BaseController
     public function logout()
     {
         AuthTM::logout();
-        return redirect(config('auth_tm.after_logout_url'));
+        return redirect(config('auth-tm.after_logout_url'));
     }
 
     /**

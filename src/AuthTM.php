@@ -22,7 +22,7 @@ class AuthTM
      */
     public static function getCookieKey()
     {
-        return config('auth_tm.auth_session_key');
+        return config('auth-tm.auth_session_key');
     }
 
     /**
@@ -38,10 +38,10 @@ class AuthTM
      */
     public static function login()
     {
-        return redirect(config('auth_tm.login_url')
-            . "?callback_url=" . config('auth_tm.callback_url')
+        return redirect(config('auth-tm.login_url')
+            . "?callback_url=" . config('auth-tm.callback_url')
             . "&route=" . Route::currentRouteName()
-            . "&service_id=" . config('auth_tm.service_id'));
+            . "&service_id=" . config('auth-tm.service_id'));
     }
 
     /**
@@ -54,7 +54,7 @@ class AuthTM
         if ($token) {
             Http::acceptJson()
                 ->withToken($token)
-                ->post(config('auth_tm.logout_url'), [
+                ->post(config('auth-tm.logout_url'), [
                     'token' => $token
                 ]);
         }
