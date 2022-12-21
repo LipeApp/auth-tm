@@ -47,7 +47,7 @@ class AuthTmController extends BaseController
 
         $route = data_get($json, 'route');
 
-        if (!empty($route) || Route::has($route)) {
+        if (!empty($route) && Route::has($route)) {
             $url = route($route);
         } else {
             $url = config('auth-tm.after_login_url');
