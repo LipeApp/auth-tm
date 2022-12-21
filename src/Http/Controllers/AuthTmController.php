@@ -2,6 +2,7 @@
 
 namespace Seshpulatov\AuthTm\Http\Controllers;
 
+use Cookie;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -46,13 +47,14 @@ class AuthTmController extends BaseController
 
         $route = data_get($json, 'route');
 
-        if (empty($route) || Route::has($route)) {
-            $url = config('auth-tm.after_login_url');
-        } else {
+        if (!empty($route) || Route::has($route)) {
             $url = route($route);
+        } else {
+            $url = config('auth-tm.after_login_url');
         }
-        $cookie = \Cookie::make(AuthTM::getCookieKey(), $json->token, 24 * 60 * 7);
-        \Cookie::queue($cookie);
+
+        $cookie = Cookie::make(AuthTM::getCookieKey(), $json->token, 24 * 60 * 7);
+        Cookie::queue($cookie);
         return redirect($url);
     }
 
