@@ -2,6 +2,7 @@
 
 namespace Seshpulatov\AuthTm;
 
+use Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -31,6 +32,14 @@ class AuthTM
     public static function getToken()
     {
         return Cookie::get(self::getCookieKey());
+    }
+
+    /**
+     * @return bool
+     */
+    public static function hasToken(): bool
+    {
+        return is_null(!self::getToken());
     }
 
     /**
@@ -128,6 +137,33 @@ class AuthTM
     public static function removeUser()
     {
         self::$user = null;
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public static function getMenu()
+    {
+
+        $token = self::getToken();
+
+        if (!empty($token)) {
+
+            return Cache::remember($token . "_menu", 60 * 24, function () use ($token) {
+
+                $serviceId = config('auth-tm.service_id');
+                $url = config('auth-tm.menu_url') . '?service_id=' . $serviceId;
+                $result = Http::acceptJson()
+                    ->withToken($token)
+                    ->get($url);
+
+                $json = json_decode($result);
+
+                return $json->menus;
+            });
+        }
+
+        return [];
     }
 
 }
