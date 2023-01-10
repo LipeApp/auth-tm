@@ -11,31 +11,25 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Seshpulatov\AuthTm\AuthTM;
 use Seshpulatov\AuthTm\Helper\Coder;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthControlMiddleware
 {
-    private Coder $coder;
-
-    public function __construct()
-    {
-        $this->coder = new Coder();
-    }
+    public function __construct(protected Coder $coder){}
 
     /**
      * @param Request $request
      * @param Closure $next
      * @return Application|RedirectResponse|Redirector|mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
 
         if (config('app.env') === 'testing') {
             return $next($request);
         }
 
-        $token = AuthTM::getToken();
-
-        if ($token) {
+        if ( $token = AuthTM::getToken() ) {
 
             $check = Http::acceptJson()
                 ->withToken($token)
@@ -44,28 +38,24 @@ class AuthControlMiddleware
                     'service_id' => config('auth-tm.service_id')
                 ]);
 
-            if ($check->status() === 401) {
+            if ($check->status() === Response::HTTP_UNAUTHORIZED) {
                 return AuthTM::login();
             }
 
-            $coder = new Coder();
             $data = $check->json('data');
-
-            $json = json_decode($coder->decrypt($data));
+            $json = json_decode($this->coder->decrypt($data));
 
             if (isset($json->success)) {
 
-                $userData = data_get($json, 'user');
-
-                if ($userData) {
+                if ($userData = data_get($json, 'user')) {
                     AuthTM::setUser((array)$userData);
                 }
 
                 if ($json->allowed) {
                     return $next($request);
-                } else {
-                    abort(403);
                 }
+
+                abort(Response::HTTP_FORBIDDEN);
             }
         }
 

@@ -17,11 +17,12 @@ use Seshpulatov\AuthTm\Helper\Coder;
 
 class AuthTmController extends BaseController
 {
+    public function __construct(protected Coder $coder){}
 
     /**
      * @return Application|Factory|View
      */
-    public function defaultPage()
+    public function defaultPage(): Factory|View|Application
     {
         return view('auth-tm::default-page');
     }
@@ -32,54 +33,42 @@ class AuthTmController extends BaseController
      */
     public function login()
     {
+        $json  = json_decode($this->coder->decrypt(request()->input('data')), true);
 
-        $coder = new Coder();
+        if (is_array($json) && isset($json['user'])) {
 
-        if (is_array(request()->input('data'))) {
-            exit("AuthTMController");
+            AuthTM::setUser($json['user']);
+
+            $cookie = Cookie::make(AuthTM::getCookieKey(), $json['token'], 24 * 60 * 7);
+            Cookie::queue($cookie);
+
+            return redirect($json['route']);
         }
 
-        $json = json_decode($coder->decrypt(request()->input('data')));
-
-        $userData = (array)$json->user;
-
-        AuthTM::setUser($userData);
-
-        $route = data_get($json, 'route');
-
-        if (!empty($route) && Route::has($route)) {
-            $url = route($route);
-        } else {
-            $url = config('auth-tm.after_login_url');
-        }
-
-        $cookie = Cookie::make(AuthTM::getCookieKey(), $json->token, 24 * 60 * 7);
-        Cookie::queue($cookie);
-        return redirect($url);
+        exit('No data: AuthTmController');
     }
 
     /**
      * @return Application|RedirectResponse|Redirector
      */
-    public function logout()
+    public function logout(): Redirector|RedirectResponse|Application
     {
         AuthTM::logout();
         return redirect(config('auth-tm.after_logout_url'));
     }
 
     /**
+     * Get list of all routes in App/Http/Controllers
+     *
      * @return JsonResponse
      */
-    public function routes()
+    public function routes(): JsonResponse
     {
         collect(Route::getRoutes())->map(function ($route) use (&$routes) {
             if (str_contains($route->getActionName(), "App\Http\Controllers") && !str_contains($route->getActionName(), "App\Http\Controllers\Api")) {
                 $routes[] = $route->getName();
             }
         });
-        $coder = new Coder();
-        return response()->json(['data' => $coder->encrypt(json_encode($routes))]);
+        return response()->json(['data' => $this->coder->encrypt(json_encode($routes))]);
     }
-
-
 }

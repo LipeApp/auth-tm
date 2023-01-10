@@ -11,22 +11,15 @@ use http\Exception\InvalidArgumentException;
  */
 class User
 {
-    public array $data = [];
+    public function __construct(public array $data = []){}
 
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
-
+    /**
+     * @param string $name
+     * @return mixed
+     */
     public function __get(string $name)
     {
-
-        if (isset($this->data[$name])) {
-            return $this->data[$name];
-        }
-
-        throw new InvalidArgumentException();
-
+        return $this->data[$name] ?? throw new InvalidArgumentException();
     }
 
 }
