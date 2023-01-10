@@ -15,7 +15,7 @@ class AuthTM
     /**
      * @var User|null
      */
-    public static ?User $user;
+    public static ?User $user = null;
 
     /**
      * @return mixed
