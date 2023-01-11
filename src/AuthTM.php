@@ -49,7 +49,7 @@ class AuthTM
     {
         return redirect(config('auth-tm.login_url')
             . "?callback_url=" . config('auth-tm.callback_url')
-            . "&route=" . Route::currentRouteName()
+            . "&route=" . request()->path()
             . "&service_id=" . config('auth-tm.service_id'));
     }
 
