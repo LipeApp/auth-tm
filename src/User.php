@@ -2,7 +2,8 @@
 
 namespace Seshpulatov\AuthTm;
 
-use http\Exception\InvalidArgumentException;
+
+use InvalidArgumentException;
 
 /**
  * @property-read int|string $id
@@ -11,7 +12,9 @@ use http\Exception\InvalidArgumentException;
  */
 class User
 {
-    public function __construct(public array $data = []){}
+    public function __construct(public readonly array $data = [])
+    {
+    }
 
     /**
      * @param string $name
@@ -19,7 +22,7 @@ class User
      */
     public function __get(string $name)
     {
-        return $this->data[$name] ?? throw new InvalidArgumentException();
+        return $this->data[$name] ?? throw new InvalidArgumentException("User does not have a '$name' property");
     }
 
 }

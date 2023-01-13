@@ -29,7 +29,6 @@ class TmAuthProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'auth-tm');
     }
 
-
     public function register()
     {
         $this->app->bind(Coder::class, function () {
