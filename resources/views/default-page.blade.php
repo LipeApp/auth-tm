@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="https://file.tmart.uz/4E60/favicon.ico?view">
+    <link rel="icon" type="image/x-icon" href="https://mini-io-api.tm.uz/catalog/default-page/favicon.ico">
     <title>{{ config('app.name') }}</title>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
@@ -18,7 +18,7 @@
         }
 
         body {
-            background-image: url(https://file.tmart.uz/4E5r/fon.jpg?view);
+            background-image: url(https://mini-io-api.tm.uz/catalog/default-page/fon.jpg);
             background-size: cover;
             font-family: "Roboto", sans-serif;
             height: 100vh;
@@ -259,31 +259,31 @@
 <body cz-shortcut-listen="true">
 <div class="wrapper">
     <div class="site-logo">
-        <img src="https://file.tmart.uz/4E5v/texnomart-logo.svg?view" alt="">
+        <img src="https://mini-io-api.tm.uz/catalog/default-page/texnomart-logo.svg" alt="">
     </div>
     <div class="blocks">
         <a href="{{ config('auth-tm.documentation_url', '#') }}" class="block-item">
             <div class="item-left">
-                <img src="https://file.tmart.uz/4E5u/doc-icon.svg?view" alt="">
+                <img src="https://mini-io-api.tm.uz/catalog/default-page/doc-icon.svg" alt="">
             </div>
             <div class="item-info">
                 <div class="title">Документация</div>
                 <div class="subtitle">Перейти к документации</div>
             </div>
             <div class="item-right">
-                <img src="https://file.tmart.uz/4E5s/link-icon.svg?view" alt="">
+                <img src="https://mini-io-api.tm.uz/catalog/default-page/link-icon.svg" alt="">
             </div>
         </a>
         <a href="{{ config('auth-tm.home_page_url', '#') }}" class="block-item">
             <div class="item-left">
-                <img src="https://file.tmart.uz/4E5q/admin-icon.svg?view" alt="">
+                <img src="https://mini-io-api.tm.uz/catalog/default-page/admin-icon.svg" alt="">
             </div>
             <div class="item-info">
                 <div class="title">Администрация</div>
                 <div class="subtitle">Перейти к панели управления</div>
             </div>
             <div class="item-right">
-                <img src="https://file.tmart.uz/4E5s/link-icon.svg?view" alt="">
+                <img src="https://mini-io-api.tm.uz/catalog/default-page/link-icon.svg" alt="">
             </div>
         </a>
     </div>
