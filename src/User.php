@@ -2,9 +2,6 @@
 
 namespace Seshpulatov\AuthTm;
 
-
-use InvalidArgumentException;
-
 /**
  * @property-read int|string $id
  * @property-read int|string $full_name
@@ -22,7 +19,7 @@ class User
      */
     public function __get(string $name)
     {
-        return $this->data[$name] ?? throw new InvalidArgumentException("User does not have a '$name' property");
+        return $this->data[$name] ?? null;
     }
 
 }
