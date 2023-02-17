@@ -20,6 +20,8 @@ class TmAuthProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__ . '/../routes/auth-tm.php');
 
+        $this->app->alias('AuthTM', AuthTM::class);
+
         $router = $this->app->make(Router::class);
 
         $router->aliasMiddleware('auth_tm', AuthControlMiddleware::class);
