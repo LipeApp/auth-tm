@@ -29,7 +29,6 @@ class AuthTmController extends BaseController
 
     /**
      * @return Application|RedirectResponse|Redirector|void
-     * @throws BindingResolutionException
      */
     public function login()
     {
