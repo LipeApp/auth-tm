@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'login_url' => env('AUTH_SERVICE_URL') . "/auth",
+    'login_url' => env('AUTH_LOGIN_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -31,7 +31,7 @@ return [
     |
     */
 
-    'login_check' => env('AUTH_SERVICE_URL') . "/api/check",
+    'login_check' => env('AUTH_LOGIN_CHECK_URL'),
 
     /*
     |--------------------------------------------------------------------------
