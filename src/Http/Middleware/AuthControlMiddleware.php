@@ -44,16 +44,24 @@ class AuthControlMiddleware
 
             if (isset($json['success'])) {
 
-                if ($userData = data_get($json, 'user')) {
-                    AuthTM::setUser((array)$userData);
+
+                $success = $json['success'];
+
+                if ($success){
+
+                    $allowed = data_get($json, 'allowed', false);
+
+                    if ($allowed){
+
+                        if ($userData = data_get($json, 'user')) {
+                            AuthTM::setUser((array)$userData);
+                        }
+                        return $next($request);
+                    }
+                    else{
+                        abort(Response::HTTP_FORBIDDEN);
+                    }
                 }
-
-                if ($json['allowed']) {
-                    return $next($request);
-                }
-
-                abort(Response::HTTP_FORBIDDEN);
-
             }
 
         }
