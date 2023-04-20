@@ -1,6 +1,7 @@
 <?php
 
 namespace Seshpulatov\AuthTm\Helper;
+
 use Illuminate\Encryption\Encrypter;
 
 class Coder
@@ -23,15 +24,28 @@ class Coder
         return 'aes-256-cbc';
     }
 
-
-    public function encrypt(string $text): string
+    /**
+     * @param string|null $text
+     * @return string
+     */
+    public function encrypt($text): string
     {
+        if (empty($text) || !is_string($text)) {
+            return '';
+        }
         return $this->model->encrypt($text);
     }
 
 
-    public function decrypt(string $text) : string
+    /**
+     * @param string|null $text
+     * @return string
+     */
+    public function decrypt($text): string
     {
+        if (empty($text) || !is_string($text)) {
+            return '';
+        }
         return $this->model->decrypt($text);
     }
 }

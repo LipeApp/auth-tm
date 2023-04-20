@@ -44,22 +44,22 @@ class AuthControlMiddleware
 
             if (isset($json['success'])) {
 
-
                 $success = $json['success'];
 
-                if ($success){
+                if ($success) {
 
-                    $allowed = data_get($json, 'allowed', false);
+                    if (isset($json['allowed'])) {
 
-                    if ($allowed){
+                        $allowed = (bool)$json['allowed'];
 
-                        if ($userData = data_get($json, 'user')) {
-                            AuthTM::setUser((array)$userData);
+                        if ($allowed) {
+                            if ($userData = data_get($json, 'user')) {
+                                AuthTM::setUser((array)$userData);
+                            }
+                            return $next($request);
+                        } else {
+                            abort(Response::HTTP_FORBIDDEN);
                         }
-                        return $next($request);
-                    }
-                    else{
-                        abort(Response::HTTP_FORBIDDEN);
                     }
                 }
             }
@@ -82,7 +82,6 @@ class AuthControlMiddleware
                 'route'      => Route::currentRouteName(),
                 'service_id' => config('auth-tm.service_id')
             ]);
-
     }
 
     /**
