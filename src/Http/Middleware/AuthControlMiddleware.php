@@ -88,7 +88,7 @@ class AuthControlMiddleware
      * @param HttpClientResponse $response
      * @return array
      */
-    private function normalizeResponseData(HttpClientResponse $response): array
+    protected function normalizeResponseData(HttpClientResponse $response): array
     {
 
         $json = $response->json();
