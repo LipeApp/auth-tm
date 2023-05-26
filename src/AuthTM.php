@@ -8,7 +8,6 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
 
 class AuthTM
 {
@@ -31,7 +30,11 @@ class AuthTM
      */
     public static function getToken(): array|string|null
     {
-        return Cookie::get(self::getCookieKey());
+        $key = self::getCookieKey();
+        if (session()->has($key)) {
+            return session()->get($key);
+        }
+        return Cookie::get($key);
     }
 
     /**
@@ -58,7 +61,7 @@ class AuthTM
      */
     public static function logout(): void
     {
-        if ( $token = self::getToken() ) {
+        if ($token = self::getToken()) {
             Http::acceptJson()
                 ->withToken($token)
                 ->post(config('auth-tm.logout_url'), [
@@ -108,7 +111,7 @@ class AuthTM
      */
     public static function userFullName(): ?string
     {
-       return self::user()?->full_name;
+        return self::user()?->full_name;
     }
 
     /**
@@ -138,10 +141,10 @@ class AuthTM
 
             return Cache::remember($token . "_menu", 60 * 24, function () use ($token) {
 
-                $url    = config('auth-tm.menu_url') . '?service_id=' . config('auth-tm.service_id');
+                $url = config('auth-tm.menu_url') . '?service_id=' . config('auth-tm.service_id');
                 $result = Http::acceptJson()
-                            ->withToken($token)
-                            ->get($url);
+                    ->withToken($token)
+                    ->get($url);
 
                 $json = json_decode($result);
                 return $json?->menus;

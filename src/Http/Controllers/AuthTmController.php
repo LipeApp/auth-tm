@@ -42,20 +42,25 @@ class AuthTmController extends BaseController
 
         $json = json_decode($this->coder->decrypt($data), true);
 
-        if (is_array($json) && isset($json['user'])) {
+        if (is_array($json) && isset($json['user']) && isset($json['token'])) {
+
+            $token = $json['token'];
+            $keyName = AuthTM::getCookieKey();
 
             AuthTM::setUser($json['user']);
 
             $cookie = Cookie::make(
-                name: AuthTM::getCookieKey(),
-                value: $json['token'],
+                name: $keyName,
+                value: $token,
                 minutes: 24 * 60 * 7,
                 httpOnly: false
             );
 
             Cookie::queue($cookie);
 
-            return redirect($json['route']);
+            session()->put($keyName, $token);
+
+            return redirect($json['route'] ?? config('auth-tm.after_login_url'));
         }
 
         exit('No data: AuthTmController');
