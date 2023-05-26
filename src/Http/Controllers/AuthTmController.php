@@ -3,7 +3,6 @@
 namespace Seshpulatov\AuthTm\Http\Controllers;
 
 use Cookie;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,7 +16,9 @@ use Seshpulatov\AuthTm\Helper\Coder;
 
 class AuthTmController extends BaseController
 {
-    public function __construct(protected Coder $coder){}
+    public function __construct(protected Coder $coder)
+    {
+    }
 
     /**
      * @return Application|Factory|View
@@ -32,13 +33,26 @@ class AuthTmController extends BaseController
      */
     public function login()
     {
-        $json  = json_decode($this->coder->decrypt(request()->input('data')), true);
+
+        $data = request()->input('data');
+
+        if (empty($data)) {
+            exit('No data: AuthTmController');
+        }
+
+        $json = json_decode($this->coder->decrypt($data), true);
 
         if (is_array($json) && isset($json['user'])) {
 
             AuthTM::setUser($json['user']);
 
-            $cookie = Cookie::make(AuthTM::getCookieKey(), $json['token'], 24 * 60 * 7);
+            $cookie = Cookie::make(
+                name: AuthTM::getCookieKey(),
+                value: $json['token'],
+                minutes: 24 * 60 * 7,
+                httpOnly: false
+            );
+
             Cookie::queue($cookie);
 
             return redirect($json['route']);
