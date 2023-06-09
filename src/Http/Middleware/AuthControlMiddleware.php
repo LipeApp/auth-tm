@@ -72,7 +72,7 @@ class AuthControlMiddleware
         return AuthTM::login();
     }
 
-    protected function getToken()
+    public function getToken()
     {
         return AuthTM::getToken();
     }
@@ -81,7 +81,7 @@ class AuthControlMiddleware
      * @param string $token
      * @return HttpClientResponse
      */
-    protected function checkLogin($token): HttpClientResponse
+    public function checkLogin($token): HttpClientResponse
     {
         return Http::acceptJson()
             ->withToken($token)
@@ -95,7 +95,7 @@ class AuthControlMiddleware
      * @param HttpClientResponse $response
      * @return array
      */
-    protected function normalizeResponseData(HttpClientResponse $response): array
+    public function normalizeResponseData(HttpClientResponse $response): array
     {
 
         $json = $response->json();
