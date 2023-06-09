@@ -32,7 +32,9 @@ class AuthControlMiddleware
             return $next($request);
         }
 
-        if ($token = AuthTM::getToken()) {
+        $token = $this->getToken();
+
+        if ($token) {
 
             $response = $this->checkLogin($token);
 
@@ -68,6 +70,11 @@ class AuthControlMiddleware
 
         AuthTM::logout();
         return AuthTM::login();
+    }
+
+    protected function getToken()
+    {
+        return AuthTM::getToken();
     }
 
     /**
